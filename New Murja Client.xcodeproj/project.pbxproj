@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6F1EC7629144D4200D2A235 /* murja_user.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7329144D4200D2A235 /* murja_user.swift */; };
+		C6F1EC7729144D4200D2A235 /* Murja_Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7429144D4200D2A235 /* Murja_Title.swift */; };
+		C6F1EC7829144D4200D2A235 /* murja_post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7529144D4200D2A235 /* murja_post.swift */; };
+		C6F1EC7A2914F78400D2A235 /* post_view.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC792914F78400D2A235 /* post_view.swift */; };
 		EA17E345290EA05B00E95A39 /* New_Murja_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA17E344290EA05B00E95A39 /* New_Murja_ClientApp.swift */; };
 		EA17E347290EA05B00E95A39 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA17E346290EA05B00E95A39 /* ContentView.swift */; };
 		EA17E349290EA05C00E95A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA17E348290EA05C00E95A39 /* Assets.xcassets */; };
@@ -34,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C6F1EC7329144D4200D2A235 /* murja_user.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = murja_user.swift; sourceTree = "<group>"; };
+		C6F1EC7429144D4200D2A235 /* Murja_Title.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Murja_Title.swift; sourceTree = "<group>"; };
+		C6F1EC7529144D4200D2A235 /* murja_post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = murja_post.swift; sourceTree = "<group>"; };
+		C6F1EC792914F78400D2A235 /* post_view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post_view.swift; sourceTree = "<group>"; };
 		EA17E341290EA05B00E95A39 /* New Murja Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Murja Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA17E344290EA05B00E95A39 /* New_Murja_ClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = New_Murja_ClientApp.swift; sourceTree = "<group>"; };
 		EA17E346290EA05B00E95A39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,8 +102,9 @@
 		EA17E343290EA05B00E95A39 /* New Murja Client */ = {
 			isa = PBXGroup;
 			children = (
+				EA17E37B290EACFA00E95A39 /* view */,
+				EA17E374290EACBC00E95A39 /* model */,
 				EA17E344290EA05B00E95A39 /* New_Murja_ClientApp.swift */,
-				EA17E346290EA05B00E95A39 /* ContentView.swift */,
 				EA17E348290EA05C00E95A39 /* Assets.xcassets */,
 				EA17E34A290EA05C00E95A39 /* Preview Content */,
 			);
@@ -125,6 +134,25 @@
 				EA17E361290EA05C00E95A39 /* New_Murja_ClientUITestsLaunchTests.swift */,
 			);
 			path = "New Murja ClientUITests";
+			sourceTree = "<group>";
+		};
+		EA17E374290EACBC00E95A39 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				C6F1EC7529144D4200D2A235 /* murja_post.swift */,
+				C6F1EC7429144D4200D2A235 /* Murja_Title.swift */,
+				C6F1EC7329144D4200D2A235 /* murja_user.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		EA17E37B290EACFA00E95A39 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				EA17E346290EA05B00E95A39 /* ContentView.swift */,
+				C6F1EC792914F78400D2A235 /* post_view.swift */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +285,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6F1EC7A2914F78400D2A235 /* post_view.swift in Sources */,
 				EA17E347290EA05B00E95A39 /* ContentView.swift in Sources */,
 				EA17E345290EA05B00E95A39 /* New_Murja_ClientApp.swift in Sources */,
+				C6F1EC7729144D4200D2A235 /* Murja_Title.swift in Sources */,
+				C6F1EC7629144D4200D2A235 /* murja_user.swift in Sources */,
+				C6F1EC7829144D4200D2A235 /* murja_post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +377,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -399,7 +431,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
