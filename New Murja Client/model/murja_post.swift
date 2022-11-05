@@ -12,7 +12,7 @@ struct Murja_Post: Decodable
     let tags: [String]
     let creator: Murja_User
     let content: String
-    let comments: [String]
+ //   let comments: [String]
     let amount_of_comments: Int
     let title: String
     let prev_post_id: Int
@@ -22,12 +22,12 @@ struct Murja_Post: Decodable
     let next_post_id: Int?
    // let created_at: Date
     
-    init(tags: [String], creator: Murja_User, content: String, comments: [String], amount_of_comments: Int, title: String, prev_post_id: Int, id: Int, versions: [Int], version: Int?, next_post_id: Int?, created_at: Date)
+    init(tags: [String], creator: Murja_User, content: String, /*comments: [String], */amount_of_comments: Int, title: String, prev_post_id: Int, id: Int, versions: [Int], version: Int?, next_post_id: Int?, created_at: Date)
     {
         self.tags = tags
         self.creator = creator
         self.content = content
-        self.comments = comments
+//        self.comments = comments
         self.amount_of_comments = amount_of_comments
         self.title = title
         self.prev_post_id = prev_post_id
@@ -44,7 +44,7 @@ struct Murja_Post: Decodable
         tags = try values.decode(Array<String>.self, forKey: .tags)
         creator = try values.decode(Murja_User.self, forKey: .creator)
         content = try values.decode(String.self, forKey: .content)
-        comments = try values.decode(Array<String>.self, forKey: .comments)
+      //  comments = try values.decode(Array<String>.self, forKey: .comments)
         amount_of_comments = 0
         title = try values.decode(String.self, forKey: .title)
         prev_post_id = try values.decode(Int.self, forKey: .prev_post_id)
@@ -63,7 +63,7 @@ struct Murja_Post: Decodable
         case tags = "tags"
         case creator = "creator"
         case content = "content"
-        case comments = "comments"
+       // case comments = "comments"
         case amountofcomments = "amount-of-comments"
         case title = "title"
         case prev_post_id = "prev-post-id"

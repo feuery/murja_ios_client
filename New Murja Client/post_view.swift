@@ -31,7 +31,7 @@ struct post_view_Previews: PreviewProvider {
         post_view(post: Murja_Post(tags: [],
                                    creator: Murja_User(username: "testikäyttäjä", nickname: "testinimimerkki", img_location: ""),
                                    content: "testi contentti",
-                                   comments: [],
+                                  // comments: [],
                                    amount_of_comments: 0,
                                    title: "testi title",
                                    prev_post_id: 0,
