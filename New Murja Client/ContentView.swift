@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ViewModel {
-
+    var titles: [Murja_Title] = []
+    var program_status = "Hello world!!!!"
+    var selected_post:Murja_Post_Ui = Murja_Post_Ui.Empty
 }
 
 struct ContentView: View {
-    @State var titles: [Murja_Title] = []
-//    @State var model = ViewModel(titles: [])
-    @State var program_status = "Hello world!!!!"
+    
+    @State var viewmodel = ViewModel()
     
     func buildFeuerxPath(route:String) -> String
     {
@@ -66,30 +67,26 @@ struct ContentView: View {
     func loadTitles()
     {
         loadFromFeuerx(route: "/posts/titles",
-                                    onSuccess: { titles in
-                                        program_status = "Loaded!"
-                                        self.titles = titles
-                                    },
-                                    onError: {error in
-                                        program_status = error
-                                    }
+                       onSuccess: { titles in
+            viewmodel.program_status = "Loaded!"
+            viewmodel.titles = titles
+        },
+                       onError: {error in
+            viewmodel.program_status = error
+        }
         )
     }
-
-
-        
-    @State var selected_post:Murja_Post?
     
     var body: some View {
         NavigationView {
             VStack {
-                Text(program_status);
-                List(self.titles) { title in
+                Text(viewmodel.program_status);
+                List(viewmodel.titles) { title in
                     Button(title.Title,
                            action: { () in
                         loadFromFeuerx(route: "/posts/post/" + String(title.Id),
                                        onSuccess: {(post: Murja_Post) in
-                            print("Loaded post " + post.title)
+                            viewmodel.selected_post = Murja_Post_Ui.Post(post: post)
                         },
                                        onError: {error in
                             print("error loading post: " + error);
@@ -98,7 +95,8 @@ struct ContentView: View {
                 
                 Button("Load blog posts", action: { loadTitles() })
                     .padding()
-            }
+            };
+            post_view(vm: viewmodel)
         }
     }
 }

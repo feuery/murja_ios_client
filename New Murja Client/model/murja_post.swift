@@ -6,15 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Murja_Post: Decodable
+final class Murja_Post: Decodable, ObservableObject
 {
-    let tags: [String]
+    @Published var tags: [String]
     let creator: Murja_User
-    let content: String
- //   let comments: [String]
+    @Published var content: String
+                                                   
+ //   @Published var comments: [String]
     let amount_of_comments: Int
-    let title: String
+    @Published var title: String
     let prev_post_id: Int
     let id: Int
     let versions: [Int]
@@ -26,7 +28,7 @@ struct Murja_Post: Decodable
     {
         self.tags = tags
         self.creator = creator
-        self.content = content
+//        self.content = content
 //        self.comments = comments
         self.amount_of_comments = amount_of_comments
         self.title = title
@@ -36,7 +38,9 @@ struct Murja_Post: Decodable
         self.version = version
         self.next_post_id = next_post_id
       // self.created_at = created_at
+        self.content = content
     }
+    
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -73,4 +77,10 @@ struct Murja_Post: Decodable
         case next_post_id = "next-post-id"
         case created_at = "created-at"
     }
+}
+
+enum Murja_Post_Ui
+{
+    case Empty
+    case Post (post:Murja_Post)
 }

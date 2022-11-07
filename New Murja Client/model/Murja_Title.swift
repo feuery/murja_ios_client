@@ -7,15 +7,15 @@
 
 import Foundation
 
-class Murja_Title : Codable, Identifiable
+class Murja_Title : Codable, Identifiable, ObservableObject
 {
     var id: ObjectIdentifier?
     
-    let Month: Float
+    @Published var Month: Float
     let Id: Int
-    let Tags: [String]
-    let Year: Float
-    let Title: String
+    @Published var Tags: [String]
+    @Published var Year: Float
+    @Published var Title: String
     
     enum CodingKeys: String, CodingKey
     {

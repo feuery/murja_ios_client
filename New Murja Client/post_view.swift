@@ -8,37 +8,36 @@
 import SwiftUI
 
 struct post_view: View {
-    let post : Murja_Post
-    @State var content = ""
-    
-    init(post:Murja_Post)
-    {
-        self.post = post
-        content = post.content
-    }
+    var vm : ViewModel
     
     var body: some View {
-        VStack {
-            Text(post.title).font(Font.headline.weight(.bold));
-            TextField( LocalizedStringKey(post.title), text: $content)
+        switch(vm.selected_post)
+        {
+        case .Empty: Text("No post selected")
+        case var .Post(real_post):
+            let binding = Binding(
+                get: {
+                    real_post.content
+                },
+                set: {
+                    real_post.content = $0
+                }
+            )
+
+                        VStack {
+                Text(real_post.title).font(Font.headline.weight(.bold));
+                TextField( LocalizedStringKey(real_post.title), text: binding)
+            }
             
         }
     }
 }
 
 struct post_view_Previews: PreviewProvider {
+
     static var previews: some View {
-        post_view(post: Murja_Post(tags: [],
-                                   creator: Murja_User(username: "testikäyttäjä", nickname: "testinimimerkki", img_location: ""),
-                                   content: "testi contentti",
-                                  // comments: [],
-                                   amount_of_comments: 0,
-                                   title: "testi title",
-                                   prev_post_id: 0,
-                                   id: 0,
-                                   versions: [1,2,3],
-                                   version: 3,
-                                   next_post_id: Optional.none,
-                                   created_at: Date.now)
-        )}
+        post_view(vm: ViewModel(titles: [],
+                                program_status: "Preview",
+                                selected_post: Murja_Post_Ui.Empty))
+    }
 }
