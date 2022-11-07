@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C62F4F882919955000E43D14 /* CodeEditor in Frameworks */ = {isa = PBXBuildFile; productRef = C62F4F872919955000E43D14 /* CodeEditor */; };
 		C6F1EC7629144D4200D2A235 /* murja_user.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7329144D4200D2A235 /* murja_user.swift */; };
 		C6F1EC7729144D4200D2A235 /* Murja_Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7429144D4200D2A235 /* Murja_Title.swift */; };
 		C6F1EC7829144D4200D2A235 /* murja_post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F1EC7529144D4200D2A235 /* murja_post.swift */; };
@@ -63,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C62F4F882919955000E43D14 /* CodeEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +187,9 @@
 			dependencies = (
 			);
 			name = "New Murja Client";
+			packageProductDependencies = (
+				C62F4F872919955000E43D14 /* CodeEditor */,
+			);
 			productName = "New Murja Client";
 			productReference = EA17E341290EA05B00E95A39 /* New Murja Client.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +262,9 @@
 				Base,
 			);
 			mainGroup = EA17E338290EA05B00E95A39;
+			packageReferences = (
+				C62F4F862919955000E43D14 /* XCRemoteSwiftPackageReference "CodeEditor" */,
+			);
 			productRefGroup = EA17E342290EA05B00E95A39 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -631,6 +639,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C62F4F862919955000E43D14 /* XCRemoteSwiftPackageReference "CodeEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZeeZide/CodeEditor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C62F4F872919955000E43D14 /* CodeEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C62F4F862919955000E43D14 /* XCRemoteSwiftPackageReference "CodeEditor" */;
+			productName = CodeEditor;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA17E339290EA05B00E95A39 /* Project object */;
 }

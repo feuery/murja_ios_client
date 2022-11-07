@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CodeEditor
 
 struct post_view: View {
     var vm : ViewModel
@@ -24,9 +25,9 @@ struct post_view: View {
                 }
             )
 
-                        VStack {
+            VStack {
                 Text(real_post.title).font(Font.headline.weight(.bold));
-                TextField( LocalizedStringKey(real_post.title), text: binding)
+                CodeEditor(source: binding, language: .xml)
             }
             
         }
