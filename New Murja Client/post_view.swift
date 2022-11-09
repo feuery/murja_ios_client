@@ -8,14 +8,14 @@
 import SwiftUI
 import CodeEditor
 
-struct post_view: View {
+struct Post_View: View {
     var vm : ViewModel
     
     var body: some View {
         switch(vm.selected_post)
         {
-        case .Empty: Text("No post selected")
-        case var .Post(real_post):
+        case .empty: Text("No post selected")
+        case var .post(real_post):
             let binding = Binding(
                 get: {
                     real_post.content
@@ -37,8 +37,8 @@ struct post_view: View {
 struct post_view_Previews: PreviewProvider {
 
     static var previews: some View {
-        post_view(vm: ViewModel(titles: [],
+        Post_View(vm: ViewModel(titles: [],
                                 program_status: "Preview",
-                                selected_post: Murja_Post_Ui.Empty))
+                                selected_post: Murja_Post_Ui.empty))
     }
 }

@@ -81,6 +81,6 @@ final class Murja_Post: Decodable, ObservableObject
 
 enum Murja_Post_Ui
 {
-    case Empty
-    case Post (post:Murja_Post)
+    case empty
+    case post (post:Murja_Post)
 }

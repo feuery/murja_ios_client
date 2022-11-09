@@ -10,7 +10,7 @@ import SwiftUI
 struct ViewModel {
     var titles: [Murja_Title] = []
     var program_status = "Hello world!!!!"
-    var selected_post:Murja_Post_Ui = Murja_Post_Ui.Empty
+    var selected_post:Murja_Post_Ui = Murja_Post_Ui.empty
 }
 
 struct ContentView: View {
@@ -86,7 +86,7 @@ struct ContentView: View {
                            action: { () in
                         loadFromFeuerx(route: "/posts/post/" + String(title.Id),
                                        onSuccess: {(post: Murja_Post) in
-                            viewmodel.selected_post = Murja_Post_Ui.Post(post: post)
+                            viewmodel.selected_post = Murja_Post_Ui.post(post: post)
                         },
                                        onError: {error in
                             print("error loading post: " + error);
@@ -96,7 +96,7 @@ struct ContentView: View {
                 Button("Load blog posts", action: { loadTitles() })
                     .padding()
             };
-            post_view(vm: viewmodel)
+            Post_View(vm: viewmodel)
         }
     }
 }
