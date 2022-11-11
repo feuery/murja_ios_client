@@ -77,10 +77,13 @@ struct ContentView: View {
         )
     }
     
+    func addNewPost() {
+        print("Adding a new post in backend and fetching new titles I guess")
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
-                Text(viewmodel.program_status);
                 List(viewmodel.titles) { title in
                     Button(title.Title,
                            action: { () in
@@ -89,13 +92,20 @@ struct ContentView: View {
                             viewmodel.selected_post = Murja_Post_Ui.post(post: post)
                         },
                                        onError: {error in
-                            print("error loading post: " + error);
-                        })})};
+                            print("error loading post: " + error)
+                        })})}
                 
                 
                 Button("Load blog posts", action: { loadTitles() })
                     .padding()
-            };
+            }.toolbar {
+                ToolbarItem(placement: .primaryAction)
+                {
+                    Button(action: addNewPost)
+                    {
+                        Image(systemName: "plus")
+                    }}
+            }
             Post_View(vm: viewmodel)
         }
     }
