@@ -11,7 +11,7 @@ import SwiftUI
 struct New_Murja_ClientApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Login_view()
         }
     }
 }
