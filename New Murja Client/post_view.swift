@@ -38,7 +38,6 @@ struct post_view_Previews: PreviewProvider {
 
     static var previews: some View {
         Post_View(vm: ViewModel(titles: [],
-                                program_status: "Preview",
-                                selected_post: Murja_Post_Ui.empty))
+                                program_status: "Preview", selected_post: Murja_Post_Ui.empty, base_path:"https://feuerx.net"))
     }
 }

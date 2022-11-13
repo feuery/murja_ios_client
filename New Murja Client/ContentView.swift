@@ -5,77 +5,40 @@
 //  Created by Ilpo Lehtinen on 30.10.2022.
 //
 
+import Foundation
 import SwiftUI
 
-struct ViewModel {
+class ViewModel: ObservableObject {
     var titles: [Murja_Title] = []
     var program_status = "Hello world!!!!"
     var selected_post:Murja_Post_Ui = Murja_Post_Ui.empty
+    var base_path:String
+    var logged_in_user: Logged_in_Murja_user_Ui = Logged_in_Murja_user_Ui.empty
+
+    @Published var user_logged_in: Bool = false
+    
+    
+    init(base_path:String) {
+        self.base_path = base_path
+    }
+
+    init(titles: [Murja_Title],
+         program_status: String,
+         selected_post:Murja_Post_Ui,
+         base_path:String)
+    {
+        self.titles = titles
+        self.program_status = program_status
+        self.selected_post = selected_post
+        self.base_path = base_path
+        // self.logged_in_user = logged_in_user
+    }
 }
 
 struct ContentView: View {
-    
-    @State var viewmodel = ViewModel()
-    
-    func buildFeuerxPath(route:String) -> String
-    {
-        "https://feuerx.net/api" + route
-    }
 
-    func loadFromFeuerx<T:Decodable>(route:String, onSuccess: @escaping (T) -> Void, onError: @escaping (String) -> Void) {
-        let url: URL = URL(string: buildFeuerxPath(route: route))!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            do {
-                if error != nil {
-                    DispatchQueue.main.async {
-                        onError(error.debugDescription)
-                    }
-                    return
-                }
-                guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                    DispatchQueue.main.async {
-                        onError("Joku http virhe")
-                    }
-                    return
-                }
-                
-                if let _: String = String(data: data!, encoding: .utf8) {
-                    
-                    let decoder = JSONDecoder()
-                    let result: T = try decoder.decode(T.self, from: data!)
-                    
-                    DispatchQueue.main.async {
-                        onSuccess(result)
-                    }
-                    
-                }
-                else
-                {
-                    print("Couldn't load feuerx.net")
-                }
-            }
-            catch {
-                print("Fail: \(error)")
-            }
-            
-        }
-        task.resume()
-    }
+    var viewmodel: ViewModel
         
-
-    
-    func loadTitles()
-    {
-        loadFromFeuerx(route: "/posts/titles",
-                       onSuccess: { titles in
-            viewmodel.program_status = "Loaded!"
-            viewmodel.titles = titles
-        },
-                       onError: {error in
-            viewmodel.program_status = error
-        }
-        )
-    }
     
     func addNewPost() {
         print("Adding a new post in backend and fetching new titles I guess")
@@ -85,19 +48,10 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List(viewmodel.titles) { title in
-                    Button(title.Title,
-                           action: { () in
-                        loadFromFeuerx(route: "/posts/post/" + String(title.Id),
-                                       onSuccess: {(post: Murja_Post) in
-                            viewmodel.selected_post = Murja_Post_Ui.post(post: post)
-                        },
-                                       onError: {error in
-                            print("error loading post: " + error)
-                        })})}
-                
-                
-                Button("Load blog posts", action: { loadTitles() })
-                    .padding()
+                    Button(title.Title) {
+                        Murja_Backend.loadPost(viewmodel, title: title)
+                    }
+                }
             }.toolbar {
                 ToolbarItem(placement: .primaryAction)
                 {
@@ -112,7 +66,8 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @State static var vm = ViewModel(base_path: "https://feuerx.net")
     static var previews: some View {
-        ContentView()
+        ContentView(viewmodel: vm)
     }
 }
