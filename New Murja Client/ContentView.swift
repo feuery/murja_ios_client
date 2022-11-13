@@ -37,7 +37,7 @@ class ViewModel: ObservableObject {
 
 struct ContentView: View {
 
-    var viewmodel: ViewModel
+    @StateObject var viewmodel: ViewModel
         
     
     func addNewPost() {

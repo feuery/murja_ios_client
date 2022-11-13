@@ -12,7 +12,7 @@ struct Login_view: View {
     @State var password = "";
     @State var server_url = "https://feuerx.net"
     
-    var viewmodel = ViewModel(base_path: "")
+    @StateObject private var viewmodel = ViewModel(base_path: "")
     
     func login(username: String, password: String, url:String) async
     {
