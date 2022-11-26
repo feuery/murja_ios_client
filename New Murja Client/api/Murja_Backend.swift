@@ -18,7 +18,7 @@ class Murja_Backend {
     static func loadTitles(Ctrl: Murja_Client_Controller)
     {
         loadFromFeuerx(Ctrl,
-                       route: "/posts/titles",
+                       route: "/posts/all-titles",
                        onSuccess: { titles in
                            print("Loaded titles")
                            Ctrl.titles = titles
@@ -41,8 +41,9 @@ class Murja_Backend {
     }
 
     static func loadFromFeuerx<T:Decodable>(_ ctrl: Murja_Client_Controller, route:String, onSuccess: @escaping (T) -> Void, onError: @escaping (String) -> Void) {
-        let url: URL = URL(string: Murja_Backend.buildFeuerxPath(base_path: ctrl.base_path,
-                                                   route: route))!
+        let url_as_string = Murja_Backend.buildFeuerxPath(base_path: ctrl.base_path,
+                                                          route: route);
+        let url: URL = URL(string: url_as_string)!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             do {
                 if error != nil {
@@ -51,11 +52,15 @@ class Murja_Backend {
                     }
                     return
                 }
-                guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                    DispatchQueue.main.async {
-                        onError("Joku http virhe")
+                if let httpResponse = response as? HTTPURLResponse
+                {
+                    if !((200...299).contains(httpResponse.statusCode))
+                    {
+                        DispatchQueue.main.async {
+                            onError("Some http error, status " + String(httpResponse.statusCode) + " and url we're trying to retrieve is " + url_as_string)
+                        }
+                        return
                     }
-                    return
                 }
                 
                 if let _: String = String(data: data!, encoding: .utf8) {
