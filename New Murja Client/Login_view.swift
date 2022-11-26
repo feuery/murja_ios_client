@@ -11,8 +11,8 @@ struct Login_view: View {
     @State var username = "";
     @State var password = "";
     @State var server_url = "https://feuerx.net"
-    
-    @StateObject private var viewmodel = ViewModel(base_path: "")
+
+    @StateObject var Ctrl: Murja_Client_Controller = Murja_Client_Controller()
     
     func login(username: String, password: String, url:String) async
     {
@@ -32,12 +32,12 @@ struct Login_view: View {
             
             let logged_in_user = try decoder.decode(Logged_in_Murja_User.self, from: data)
             
-            viewmodel.logged_in_user = .user(user: logged_in_user)
-            viewmodel.user_logged_in = true
-            viewmodel.base_path = server_url
+            Ctrl.logged_in_user = logged_in_user
+            Ctrl.user_logged_in = true
+            Ctrl.base_path = server_url
+            Ctrl.loadTitles();
             
             print("Login successful!")
-            Murja_Backend.loadTitles(viewmodel: viewmodel)
             
         } catch {
             print("Login failed")
@@ -75,13 +75,16 @@ struct Login_view: View {
     }
     
     var body: some View {
-        
-        switch (viewmodel.logged_in_user)  {
-        case .empty: actual_loginview
-        case .user:
-            ContentView(viewmodel: viewmodel)
+        if Ctrl.logged_in_user != nil
+        {
+            ContentView().environmentObject(Ctrl)
+        }
+        else
+        {
+            actual_loginview.environmentObject(Ctrl)
         }
     }
+    
 }
 
 struct Login_view_Previews: PreviewProvider {

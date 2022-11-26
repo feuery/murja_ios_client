@@ -15,33 +15,33 @@ class Murja_Backend {
         return base_path + "/api" + route
     }
 
-    static func loadTitles(viewmodel: ViewModel)
+    static func loadTitles(Ctrl: Murja_Client_Controller)
     {
-        loadFromFeuerx(viewmodel,
+        loadFromFeuerx(Ctrl,
                        route: "/posts/titles",
                        onSuccess: { titles in
-            viewmodel.program_status = "Loaded!"
-            viewmodel.titles = titles
-        },
+                           print("Loaded titles")
+                           Ctrl.titles = titles
+                       },
                        onError: {error in
-            viewmodel.program_status = error
-        }
+                           print("error: " + error)
+                       }
         )
     }
 
-    static func loadPost(_ viewmodel: ViewModel, title: Murja_Title) {
-        loadFromFeuerx(viewmodel,
+    static func loadPost(_ Ctrl: Murja_Client_Controller, title: Murja_Title) {
+        loadFromFeuerx(Ctrl,
                        route: "/posts/post/" + String(title.Id),
                        onSuccess: {(post: Murja_Post) in
-                           viewmodel.selected_post = Murja_Post_Ui.post(post: post)
+                           Ctrl.selected_post = post
                        },
                        onError: {error in
                            print("error loading post: " + error)
                        })
     }
 
-    static func loadFromFeuerx<T:Decodable>(_ viewmodel: ViewModel, route:String, onSuccess: @escaping (T) -> Void, onError: @escaping (String) -> Void) {
-        let url: URL = URL(string: Murja_Backend.buildFeuerxPath(base_path: viewmodel.base_path,
+    static func loadFromFeuerx<T:Decodable>(_ ctrl: Murja_Client_Controller, route:String, onSuccess: @escaping (T) -> Void, onError: @escaping (String) -> Void) {
+        let url: URL = URL(string: Murja_Backend.buildFeuerxPath(base_path: ctrl.base_path,
                                                    route: route))!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             do {

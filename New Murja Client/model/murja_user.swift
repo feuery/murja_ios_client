@@ -8,9 +8,9 @@
 import Foundation
 
 struct Murja_User: Codable {
-    let username: String
-    let nickname: String
-    let img_location: String
+    let username: String = ""
+    let nickname: String = ""
+    let img_location: String = ""
 }
 
 final class Logged_in_Murja_User: Codable, ObservableObject{

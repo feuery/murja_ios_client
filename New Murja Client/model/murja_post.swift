@@ -10,18 +10,18 @@ import SwiftUI
 
 final class Murja_Post: Decodable, ObservableObject
 {
-    @Published var tags: [String]
-    let creator: Murja_User
-    @Published var content: String
+    @Published var tags: [String] 
+    let creator: Murja_User 
+    @Published var content: String 
                                                    
  //   @Published var comments: [String]
-    let amount_of_comments: Int
-    @Published var title: String
-    let prev_post_id: Int
-    let id: Int
-    let versions: [Int]
-    let version: Int?
-    let next_post_id: Int?
+    let amount_of_comments: Int 
+    @Published var title: String 
+    let prev_post_id: Int 
+    let id: Int 
+    let versions: [Int] 
+    let version: Int? 
+    let next_post_id: Int? 
    // let created_at: Date
     
     init(tags: [String], creator: Murja_User, content: String, /*comments: [String], */amount_of_comments: Int, title: String, prev_post_id: Int, id: Int, versions: [Int], version: Int?, next_post_id: Int?, created_at: Date)
@@ -40,7 +40,20 @@ final class Murja_Post: Decodable, ObservableObject
       // self.created_at = created_at
         self.content = content
     }
-    
+
+    init()
+    {
+        self.tags = []
+        self.creator = Murja_User()
+        self.amount_of_comments = -1
+        self.title = ""
+        self.prev_post_id = -1
+        self.id = -1
+        self.versions = []
+        self.version = -1
+        self.next_post_id = -1
+        self.content = ""
+    }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
