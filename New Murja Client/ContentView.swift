@@ -17,7 +17,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationSplitView{
             VStack {
                 List(Ctrl.titles) { title in
                     Button(title.Title) {
@@ -32,8 +32,7 @@ struct ContentView: View {
                         Image(systemName: "plus")
                     }}
             }
-            Post_View()
-        }
+        } detail: { Post_View() }
     }
 }
 
