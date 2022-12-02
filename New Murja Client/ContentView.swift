@@ -13,7 +13,12 @@ struct ContentView: View {
     @EnvironmentObject var Ctrl: Murja_Client_Controller
 
     func addNewPost() {
-        print("Adding a new post in backend and fetching new titles I guess")
+        if let usr = Ctrl.logged_in_user {
+            Ctrl.selected_post = Murja_Post(creator: usr.toPostUser())            
+        }
+        else {
+            print("User is not logged in")
+        }
     }
     
     var body: some View {

@@ -8,9 +8,9 @@
 import Foundation
 
 struct Murja_User: Codable {
-    let username: String = ""
-    let nickname: String = ""
-    let img_location: String = ""
+    let username: String 
+    let nickname: String 
+    let img_location: String 
 }
 
 final class Logged_in_Murja_User: Codable, ObservableObject{
@@ -20,6 +20,13 @@ final class Logged_in_Murja_User: Codable, ObservableObject{
     let img_location: String
     let primary_group_name: String
     let permissions: [String]
+
+    func toPostUser() -> Murja_User
+    {
+        Murja_User(username: username,
+                   nickname: nickname,
+                   img_location: img_location)
+    }
 
     enum CodingKeys: String, CodingKey
     {

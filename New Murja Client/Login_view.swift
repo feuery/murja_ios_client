@@ -10,7 +10,7 @@ import SwiftUI
 struct Login_view: View {
     @State var username = "";
     @State var password = "";
-    @State var server_url = "https://feuerx.net"
+    @State var server_url = "http://localhost:3000" // "https://feuerx.net"
 
     @StateObject var Ctrl: Murja_Client_Controller = Murja_Client_Controller()
     
@@ -51,11 +51,13 @@ struct Login_view: View {
             
             TextField("Username",
                       text: $username)
-            .frame(width: 200)
+              .frame(width: 200)
+              .textFieldStyle(.roundedBorder)
             
             SecureField("Password",
                         text: $password)
-            .frame(width:200)
+              .frame(width:200)
+              .textFieldStyle(.roundedBorder)
             
             Button("Login") {
                 Task {
@@ -70,7 +72,8 @@ struct Login_view: View {
             } icon: {}
             
             TextField("Server we're logging in", text: $server_url)
-                .frame(width: 200)
+              .frame(width: 200)
+              .textFieldStyle(.roundedBorder)
         }
     }
     

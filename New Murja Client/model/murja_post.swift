@@ -8,24 +8,42 @@
 import Foundation
 import SwiftUI
 
-final class Murja_Post: Decodable, ObservableObject
+enum post_source
 {
-    @Published var tags: [String] 
-    let creator: Murja_User 
+    case server
+    case app
+}
+
+final class Murja_Post: Encodable, Decodable, ObservableObject
+{
+    let source: post_source
+    
+    @Published var tags: [String]
+    let creator: Murja_User?
     @Published var content: String 
                                                    
  //   @Published var comments: [String]
     let amount_of_comments: Int 
     @Published var title: String 
     let prev_post_id: Int 
-    let id: Int 
+    let id: Int?
+
+    var new_post: Bool
+    {
+        get
+        {
+            id != nil
+        }
+    }
+    
     let versions: [Int] 
     let version: Int? 
     let next_post_id: Int? 
    // let created_at: Date
     
-    init(tags: [String], creator: Murja_User, content: String, /*comments: [String], */amount_of_comments: Int, title: String, prev_post_id: Int, id: Int, versions: [Int], version: Int?, next_post_id: Int?, created_at: Date)
+    init(tags: [String], creator: Murja_User, content: String, /*comments: [String], */amount_of_comments: Int, title: String, prev_post_id: Int, id: Int, versions: [Int], version: Int?, next_post_id: Int?, src: post_source)
     {
+        self.source = src
         self.tags = tags
         self.creator = creator
 //        self.content = content
@@ -41,22 +59,25 @@ final class Murja_Post: Decodable, ObservableObject
         self.content = content
     }
 
-    init()
+    init(creator: Murja_User?)
     {
         self.tags = []
-        self.creator = Murja_User()
+        self.creator = creator
         self.amount_of_comments = -1
         self.title = ""
         self.prev_post_id = -1
-        self.id = -1
+        self.id = nil
         self.versions = []
         self.version = -1
         self.next_post_id = -1
         self.content = ""
+        self.source = .app
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+
+        source = .server
        
         tags = try values.decode(Array<String>.self, forKey: .tags)
         creator = try values.decode(Murja_User.self, forKey: .creator)
@@ -71,6 +92,20 @@ final class Murja_Post: Decodable, ObservableObject
         next_post_id = try values.decode(Int?.self, forKey: .next_post_id)
        // created_at = try values.decode(Date.self, forKey: .created_at)
         
+    }
+
+    func encode(to encoder: Encoder) throws
+    {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(tags, forKey: .tags)
+        try container.encode(creator, forKey: .creator)
+        try container.encode(content, forKey: .content)
+        try container.encode(title, forKey: .title)
+        try container.encode(prev_post_id, forKey: .prev_post_id)
+        try container.encode(id, forKey: .id)
+        try container.encode(versions, forKey: .versions)
+        try container.encode(version, forKey: .version)
+        try container.encode(next_post_id, forKey: .next_post_id)
     }
 
 
