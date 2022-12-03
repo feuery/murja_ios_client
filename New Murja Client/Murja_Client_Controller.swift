@@ -34,21 +34,29 @@ class Murja_Client_Controller: ObservableObject {
         if let url = url_opt {
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpMethod = (post.id != nil) ? "PUT": "POST"
+
+            let updating_post = (post.id != nil)
+            
+            request.httpMethod = updating_post ? "PUT": "POST"
+
+            print("Sending request with method " + request.httpMethod!)
 
             do {
                 let encoder = JSONEncoder()
                 let decoder = JSONDecoder()
                 let json_post = try encoder.encode(post)
                 let (data, _) = try await URLSession.shared.upload(for: request, from: json_post)
+
                 guard let updated_post_str = String(data: data, encoding: .utf8) else {
                     status = "Probably saved the post, but backend returned something rubbish we can't decipher"
                     return
                 }
+
                 guard let updated_post = try? decoder.decode(Murja_Post.self, from: data) else {
                     status = "Probably saved the post, but decoding the return value from the server (" + updated_post_str + ") failed"
                     return
                 }
+
 
                 selected_post = updated_post
                 loadTitles()
