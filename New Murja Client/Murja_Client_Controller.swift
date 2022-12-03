@@ -14,7 +14,13 @@ class Murja_Client_Controller: ObservableObject {
     @Published var logged_in_user: Logged_in_Murja_User? = nil
     @Published var user_logged_in = false
     @Published var status = ""
+    @Published var showTagSelector = false
 
+
+    func allTags(titles: [Murja_Title]) -> [String] {
+        Array(Set(titles.flatMap { $0.Tags }))
+    }
+    
     func loadPost(title: Murja_Title)
     {
         Murja_Backend.loadPost(self, title: title)

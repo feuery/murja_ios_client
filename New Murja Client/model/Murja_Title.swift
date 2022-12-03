@@ -9,13 +9,21 @@ import Foundation
 
 class Murja_Title : Codable, Identifiable, ObservableObject
 {
-    var id: ObjectIdentifier?
     
     @Published var Month: Float
     let Id: Int
     @Published var Tags: [String]
     @Published var Year: Float
     @Published var Title: String
+
+    init(Month: Float, Id: Int, Tags: [String], Year: Float, Title: String)
+    {
+        self.Month = Month
+        self.Id = Id
+        self.Tags = Tags
+        self.Year = Year
+        self.Title = Title
+    }
     
     enum CodingKeys: String, CodingKey
     {
@@ -24,7 +32,7 @@ class Murja_Title : Codable, Identifiable, ObservableObject
         case Tags = "Tags"
         case Year = "Year"
         case Title = "Title"
-    } 
+   } 
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -45,7 +53,5 @@ class Murja_Title : Codable, Identifiable, ObservableObject
         Tags = try values.decode([String].self, forKey: .Tags)
         Year = try values.decode(Float.self, forKey: .Year)
         Title = try values.decode(String.self, forKey: .Title)
-        
-        id = ObjectIdentifier(self)
     }
 }

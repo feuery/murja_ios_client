@@ -22,6 +22,7 @@ class Murja_Backend {
                        onSuccess: { titles in
                            print("Loaded titles")
                            Ctrl.titles = titles
+                           Ctrl.status = "[" + Ctrl.allTags(titles: titles).joined(separator: ", ") + " ]"
                        },
                        onError: {error in
                            print("error: " + error)

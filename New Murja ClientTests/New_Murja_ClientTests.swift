@@ -18,6 +18,15 @@ final class New_Murja_ClientTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    func testTagDeduplication() throws {
+        let ctrl = Murja_Client_Controller()
+        ctrl.titles = [Murja_Title(Month: 2.0, Id: -1, Tags: ["Testing", "Tags"], Year: 1993.0, Title: "Lol"),
+                       Murja_Title(Month: 2.0, Id: -1, Tags: ["Tags", "Are", "Your", "Friend"], Year: 1993.0, Title: "Lol")]
+
+        XCTAssertEqual(ctrl.allTags(titles: ctrl.titles),
+                        Array(Set(["Testing", "Tags", "Are", "Your", "Friend"])))
+    }
+
     func testPostDecoding() throws {
         
         let bundle = Bundle(for: type(of: self))
