@@ -13,6 +13,7 @@ class Murja_Client_Controller: ObservableObject {
     @Published var titles: [Murja_Title] = []
     @Published var logged_in_user: Logged_in_Murja_User? = nil
     @Published var user_logged_in = false
+    @Published var status = ""
 
     func loadPost(title: Murja_Title)
     {
@@ -37,16 +38,28 @@ class Murja_Client_Controller: ObservableObject {
 
             do {
                 let encoder = JSONEncoder()
+                let decoder = JSONDecoder()
                 let json_post = try encoder.encode(post)
                 let (data, _) = try await URLSession.shared.upload(for: request, from: json_post)
+                guard let updated_post_str = String(data: data, encoding: .utf8) else {
+                    status = "Probably saved the post, but backend returned something rubbish we can't decipher"
+                    return
+                }
+                guard let updated_post = try? decoder.decode(Murja_Post.self, from: data) else {
+                    status = "Probably saved the post, but decoding the return value from the server (" + updated_post_str + ") failed"
+                    return
+                }
 
-                print("Saved post: " + String(data: data, encoding: .utf8)!)
+                selected_post = updated_post
+                loadTitles()
+
+                status = "Saved post!"
             } catch {
-                print("Saving post failed")
+                status = "Saving post failed"
             }
         }
         else {
-            print ("Path " + path + " seems to be wrong")
+            status = "Path " + path + " seems to be wrong"
         }
     }
 }

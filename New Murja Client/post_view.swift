@@ -16,6 +16,7 @@ struct Post_View: View {
             TextField("Title: ", text: $ctrl.selected_post.title).font(Font.headline.weight(.bold)).textFieldStyle(.roundedBorder)
 
             CodeEditor(source: $ctrl.selected_post.content, language: .xml)
+            TextField("", text: $ctrl.status).textFieldStyle(.roundedBorder)
         }.toolbar
         {
             ToolbarItem(placement: .primaryAction) {                

@@ -25,7 +25,7 @@ final class Murja_Post: Encodable, Decodable, ObservableObject
  //   @Published var comments: [String]
     let amount_of_comments: Int 
     @Published var title: String 
-    let prev_post_id: Int 
+    let prev_post_id: Int?
     let id: Int?
 
     var new_post: Bool
@@ -65,11 +65,11 @@ final class Murja_Post: Encodable, Decodable, ObservableObject
         self.creator = creator
         self.amount_of_comments = -1
         self.title = ""
-        self.prev_post_id = -1
+        self.prev_post_id = nil
         self.id = nil
         self.versions = []
         self.version = -1
-        self.next_post_id = -1
+        self.next_post_id = nil
         self.content = ""
         self.source = .app
     }
@@ -85,7 +85,7 @@ final class Murja_Post: Encodable, Decodable, ObservableObject
       //  comments = try values.decode(Array<String>.self, forKey: .comments)
         amount_of_comments = 0
         title = try values.decode(String.self, forKey: .title)
-        prev_post_id = try values.decode(Int.self, forKey: .prev_post_id)
+        prev_post_id = try values.decode(Int?.self, forKey: .prev_post_id)
         id = try values.decode(Int.self, forKey: .id)
         versions = try values.decode(Array<Int>.self, forKey: .versions)
         version = try values.decode(Int?.self, forKey: .version)
