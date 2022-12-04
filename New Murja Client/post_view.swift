@@ -35,7 +35,6 @@ struct Post_View: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                                ctrl.showTagSelector = false
-                               ctrl.status = "Tags: [" + ctrl.selected_post.tags.joined(separator: ", ") + "]"
                            })
                     {
                         Image(systemName: "checkmark.circle")

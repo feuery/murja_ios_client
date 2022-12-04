@@ -10,9 +10,28 @@ import SwiftUI
 struct Login_view: View {
     @State var username = "";
     @State var password = "";
-    @State var server_url = "http://localhost:3000" // "https://feuerx.net"
+
+    let userDefaults = UserDefaults()
+    
+    @State var server_url: String
 
     @StateObject var Ctrl: Murja_Client_Controller = Murja_Client_Controller()
+
+    init() {
+        if let username = userDefaults.string(forKey: "username") {
+            self.username = username
+        }
+        else {
+            self.username = ""
+        }
+        
+        if let srv_url = userDefaults.string(forKey: "server_url") {
+            server_url = srv_url
+        }
+        else {
+            server_url = "http://localhost:3000" // "https://feuerx.net"
+        }
+    }
     
     func login(username: String, password: String, url:String) async
     {
@@ -63,6 +82,9 @@ struct Login_view: View {
                 Task {
                     await login(username: username, password: password, url: server_url)
                 }
+
+                userDefaults.set(server_url, forKey: "server_url")
+                userDefaults.set(username, forKey: "username")
             }
             .padding()
             .clipShape(Rectangle())
