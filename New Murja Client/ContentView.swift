@@ -12,9 +12,12 @@ struct ContentView: View {
 
     @EnvironmentObject var Ctrl: Murja_Client_Controller
 
+    @State private var columnVisibility = NavigationSplitViewVisibility.all 
+
     func addNewPost() {
         if let usr = Ctrl.logged_in_user {
-            Ctrl.selected_post = Murja_Post(creator: usr.toPostUser())            
+            Ctrl.selected_post = Murja_Post(creator: usr.toPostUser())
+            
         }
         else {
             print("User is not logged in")
@@ -22,22 +25,24 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationSplitView{
-            VStack {
-                List(Ctrl.titles) { title in
-                    Button(title.Title) {
-                        Ctrl.loadPost(title: title)
-                    }
-                }
-            }.toolbar {
-                ToolbarItem(placement: .primaryAction)
-                {
-                    Button(action: addNewPost)
-                    {
-                        Image(systemName: "plus")
-                    }}
-            }
-        } detail: { Post_View() }
+        NavigationSplitView (columnVisibility: $columnVisibility) 
+          {
+              VStack {
+                  List(Ctrl.titles) { title in
+                      Button(title.Title) {
+                          Ctrl.loadPost(title: title)
+                          columnVisibility = .detailOnly
+                      }
+                  }
+              }.toolbar {
+                  ToolbarItem(placement: .primaryAction)
+                  {
+                      Button(action: addNewPost)
+                      {
+                          Image(systemName: "plus")
+                      }}
+              }
+          }  detail: { Post_View() }
     }
 }
 

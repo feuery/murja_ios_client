@@ -53,7 +53,7 @@ struct Login_view: View {
             
             Ctrl.logged_in_user = logged_in_user
             Ctrl.user_logged_in = true
-            Ctrl.base_path = server_url
+            Ctrl.base_path = server_url.trimmingCharacters(in: .whitespacesAndNewlines)
             Ctrl.loadTitles();
             
             print("Login successful!")
@@ -80,10 +80,10 @@ struct Login_view: View {
             
             Button("Login") {
                 Task {
-                    await login(username: username, password: password, url: server_url)
+                    await login(username: username, password: password, url: server_url.trimmingCharacters(in: .whitespacesAndNewlines))
                 }
 
-                userDefaults.set(server_url, forKey: "server_url")
+                userDefaults.set(server_url.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "server_url")
                 userDefaults.set(username, forKey: "username")
             }
             .padding()
